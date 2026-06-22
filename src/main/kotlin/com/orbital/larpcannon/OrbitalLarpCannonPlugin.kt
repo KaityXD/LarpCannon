@@ -172,11 +172,18 @@ class OrbitalLarpCannonPlugin : JavaPlugin(), CommandExecutor, Listener, TabComp
         }
 
         if (args.isEmpty()) {
-            sendMessage(sender, "usage", mapOf("{CMD}" to "/orbital <nuke|stab|dogs|stasis>"))
+            sendMessage(sender, "usage", mapOf("{CMD}" to "/orbital <nuke|stab|dogs|stasis|reload>"))
             return true
         }
 
         val type = args[0].lowercase()
+        
+        if (type == "reload") {
+            reloadConfig()
+            pluginConfig = config
+            sender.sendMessage("§a[OrbitalLarpCannon] Configuration reloaded.")
+            return true
+        }
         if (!isValidStrikeType(type)) {
             sendMessage(sender, "invalid-type", emptyMap())
             return true
@@ -213,7 +220,9 @@ class OrbitalLarpCannonPlugin : JavaPlugin(), CommandExecutor, Listener, TabComp
 
         if (args.size == 1) {
             val input = args[0].lowercase()
-            return STRIKE_TYPES.filter { it.startsWith(input) }.sorted()
+            val options = STRIKE_TYPES.toMutableList()
+            options.add("reload")
+            return options.filter { it.startsWith(input) }.sorted()
         }
 
         if (args.size > 1) {
