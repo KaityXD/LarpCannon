@@ -36,4 +36,4 @@ jobs:
         prerelease: true
         title: "Nightly Build"
         files: |
-          build/libs/*-all.jar
+          build/libs/*.jar
