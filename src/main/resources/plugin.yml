@@ -1,0 +1,11 @@
+name: OrbitalLarpCannon
+version: 1.6.1
+main: com.orbital.larpcannon.OrbitalLarpCannonPlugin
+api-version: 1.20
+folia-supported: true
+commands:
+  orbital:
+    description: Get an orbital strike rod
+    usage: /orbital <chunkeater|nuke|stab|dogs|stasis>
+    permission: orbital.use
+    permission-message: §cYou don't have permission!
