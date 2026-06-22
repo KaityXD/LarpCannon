@@ -475,17 +475,11 @@ class OrbitalLarpCannonPlugin : JavaPlugin(), CommandExecutor, Listener, TabComp
                 val fuseFallbackTicks = pluginConfig.getInt("nuke.fuse-fallback-ticks", 160)
                 ct.fuseTicks = fuseFallbackTicks
                 ct.velocity = Vector(0, 0, 0)
-                ct.setGravity(false)
+                ct.setGravity(true)
                 ct.yield = yield
                 ct.isInvulnerable = true
                 val centerId = ct.uniqueId
                 tntList.add(centerId)
-
-        customScheduler.runAtEntityLater(ct, Runnable {
-                    if (!ct.isDead) {
-                        ct.setGravity(true)
-                    }
-                }, 30L)
             }
 
             for (ring in 1..rings) {
@@ -527,19 +521,12 @@ class OrbitalLarpCannonPlugin : JavaPlugin(), CommandExecutor, Listener, TabComp
                         val tnt = world.spawnEntity(spawnLoc, EntityType.TNT) as TNTPrimed
                         val fuseFallbackTicks = pluginConfig.getInt("nuke.fuse-fallback-ticks", 160)
                         tnt.fuseTicks = fuseFallbackTicks
-                        tnt.velocity = Vector(0, 0, 0)
-                        tnt.setGravity(false)
+                        tnt.velocity = getVector(targetX, centerLoc, targetZ)
+                        tnt.setGravity(true)
                         tnt.yield = yield
                         tnt.isInvulnerable = true
                         val tntUuid = tnt.uniqueId
                         tntList.add(tntUuid)
-
-                        customScheduler.runAtEntityLater(tnt, Runnable {
-                            if (!tnt.isDead) {
-                                tnt.velocity = getVector(targetX, centerLoc, targetZ)
-                                tnt.setGravity(true)
-                            }
-                        }, 30L)
                     }
                 }, delayTicks)
             }
